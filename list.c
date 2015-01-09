@@ -45,7 +45,6 @@ node* list_insertn(node* headPtr, char* data, int n){
 
 	node* currNode;
 	node* newNode;
-	node* tempNode;
 
 	currNode = headPtr;
 
@@ -110,7 +109,39 @@ node* list_remove(node* headPtr, char* dataToRm){
 		return headPtr;
 	}
 }
+node* list_removen(node* headPtr, int n){
 
+	node* currNode;
+	node* prevNode;
+	
+	currNode = headPtr->next;
+	prevNode = headPtr;
+	//this is real janky
+	int pos = 1;
+	//is this ok, to just handle 0 case???
+	if(n == 0){
+		
+		headPtr = headPtr->next;
+		return headPtr;
+	}
+	while(currNode->next != NULL){	
+		
+		if(pos == n){
+			prevNode->next = currNode->next;
+			return headPtr;	
+		}
+		currNode = currNode->next;
+		prevNode = prevNode->next;
+		pos++;
+	}
+	
+	
+	if(currNode->next == NULL){
+		
+		currNode = NULL;
+		return headPtr;
+	}	
+}
 int main(void){
 	node* list;
 	list = NULL;
@@ -123,17 +154,17 @@ int main(void){
 	
 
 	list = list_insert_tail(list, one);
-	list = list_insert_tail(list, one);
 	list = list_insert_tail(list, two);
-	list = list_insert_tail(list, two);
-	list = list_insert_head(list, four);
+	list = list_insert_tail(list, three);
+	list = list_insert_tail(list, four);
 	list = list_insert_tail(list, five);
-	list = list_insert_head(list, four);
+
 	
 		
 	list_print(list);
 
-	list = list_insertn(list, five, 3);
+	list = list_removen(list, 4);
+	printf("\n");
 
 	list_print(list);
 
