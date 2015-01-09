@@ -104,7 +104,7 @@ node* list_remove(node* headPtr, char* dataToRm){
 	
 	
 	if(*(currNode->data) == *dataToRm){
-		
+		free(currNode->next);		
 		currNode == NULL;
 		return headPtr;
 	}
@@ -137,8 +137,9 @@ node* list_removen(node* headPtr, int n){
 	
 	
 	if(currNode->next == NULL){
-		
-		currNode = NULL;
+		free(currNode->next);
+		free(currNode);
+		prevNode->next = NULL;
 		return headPtr;
 	}	
 }
