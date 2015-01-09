@@ -164,7 +164,7 @@ int main(void){
 		
 	list_print(list);
 
-	list = list_removen(list, 4);
+	list = list_removen(list, 2);
 	printf("\n");
 
 	list_print(list);
