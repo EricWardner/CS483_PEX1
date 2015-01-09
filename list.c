@@ -144,6 +144,19 @@ node* list_removen(node* headPtr, int n){
 	}	
 }
 
+char* list_get(node* headPtr, int n){
+	int pos = 0;
+	node* currNode = headPtr;
+	while(currNode != NULL){
+		if(pos == n){
+			return currNode->data;
+		}
+		pos++;
+		currNode = currNode->next;
+	}
+	return NULL; 
+}
+
 void list_destroy(node* headPtr){
 	node* currNode = headPtr;
 	node* nextNode = headPtr->next;
@@ -179,8 +192,8 @@ int main(void){
 		
 	list_print(list);
 
-	list = list_removen(list, 2);
-	printf("\n");
+	char* get = list_get(list, 2);
+	printf("\n\n%s\n\n",get);
 
 	list_print(list);
 
