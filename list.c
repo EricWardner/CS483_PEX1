@@ -18,14 +18,16 @@ node* list_insert_tail(node* headPtr, char* data){
         node* newNode;
         newNode = (node*)malloc(sizeof(node));
         newNode->data = data;
-
+	newNode->next = NULL;
 	//recursion to find end of list
-	if(headPtr->data == NULL){
-		newNode = headPtr;
+	if(headPtr == NULL){
 		return newNode;
 	}
 	else{
-		return list_insert_tail(headPtr->next, data);
+		while(headPtr != NULL){
+			headPtr = headPtr->next;
+		}
+		headPtr->next = newNode;
 	}
 
 }
