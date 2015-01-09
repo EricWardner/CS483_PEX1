@@ -35,9 +35,6 @@ node* list_insert_tail(node* headPtr, char* data){
 
 }
 
-/* list_remove: remove the node containing specific data; if multiple nodes
-    contain the data, remove the node nearest to the head
-*/
 
 // What if the user enters a negative number or very big?
 
@@ -80,6 +77,8 @@ void list_print(node* headPtr){
 	}
 }
 
+
+
 node* list_remove(node* headPtr, char* dataToRm){
 	node* currNode;
 	node* prevNode;
@@ -109,6 +108,7 @@ node* list_remove(node* headPtr, char* dataToRm){
 		return headPtr;
 	}
 }
+
 node* list_removen(node* headPtr, int n){
 
 	node* currNode;
@@ -143,6 +143,21 @@ node* list_removen(node* headPtr, int n){
 		return headPtr;
 	}	
 }
+
+void list_destroy(node* headPtr){
+	node* currNode = headPtr;
+	node* nextNode = headPtr->next;
+	
+	while(currNode != NULL){
+		nextNode = headPtr->next;
+		free(currNode);
+		currNode = nextNode;
+	}
+	
+	return;
+		
+}
+
 int main(void){
 	node* list;
 	list = NULL;
