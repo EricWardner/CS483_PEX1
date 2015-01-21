@@ -48,15 +48,15 @@ node* list_insertn(node* headPtr, char* data, int n){
 	newNode = (node*)malloc(sizeof(node));
 	newNode->data = data;
 
-	int pos = 0;
+	int pos = 1;
 	if (headPtr == NULL) {
 
 		return newNode;
 	}
 
-	while (currNode->next != NULL) {
+	while (currNode != NULL) {
 	
-		if (pos == n) {			
+		if (pos == n-1) {			
 			
 			newNode->next = currNode->next;
 			currNode->next = newNode;
@@ -65,7 +65,8 @@ node* list_insertn(node* headPtr, char* data, int n){
 		}
 		currNode = currNode->next;
 		pos++;
-	}	
+	}
+	return headPtr;	
 }
 
 void list_print(node* headPtr){
@@ -118,15 +119,17 @@ node* list_remove(node* headPtr, char* dataToRm){
 	currNode = headPtr->next;
 	prevNode = headPtr;
 	
-	if(*(headPtr->data) == *dataToRm){
+	if((headPtr->data) == dataToRm){
 		
-		headPtr = headPtr->next;
-		return headPtr;
+		currNode = headPtr->next;
+		free(headPtr);
+		return currNode;
 	}
-	while(currNode->next != NULL){	
+	while(currNode != NULL){	
 		
-		if(*(currNode->data) == *dataToRm){
+		if((currNode->data) == dataToRm){
 			prevNode->next = currNode->next;
+			free(currNode);
 			return headPtr;	
 		}
 		currNode = currNode->next;
@@ -134,11 +137,13 @@ node* list_remove(node* headPtr, char* dataToRm){
 	}
 	
 	
-	if(*(currNode->data) == *dataToRm){
+	if((currNode->data) == dataToRm){
 		free(currNode->next);		
-		currNode == NULL;
+		free(currNode);
+		prevNode->next = NULL;
 		return headPtr;
 	}
+	return headPtr;
 }
 
 node* list_removen(node* headPtr, int n){
@@ -160,6 +165,7 @@ node* list_removen(node* headPtr, int n){
 		
 		if(pos == n){
 			prevNode->next = currNode->next;
+			free(currNode);
 			return headPtr;	
 		}
 		currNode = currNode->next;
@@ -177,7 +183,7 @@ node* list_removen(node* headPtr, int n){
 }
 
 char* list_get(node* headPtr, int n){
-	int pos = 0;
+	int pos = 1;
 	node* currNode = headPtr;
 	while(currNode != NULL){
 		if(pos == n){
@@ -194,15 +200,13 @@ void list_destroy(node* headPtr){
 	node* nextNode = headPtr->next;
 	
 	while(currNode != NULL){
-		nextNode = headPtr->next;
+		nextNode = currNode->next;
 		free(currNode);
 		currNode = nextNode;
 	}
-	
-	return;
-		
+	return;		
 }
-
+/**
 int main(void){
 	node* list;
 	list = NULL;
@@ -238,3 +242,5 @@ int main(void){
 
 	//list_print(list);
 }
+**/
+
