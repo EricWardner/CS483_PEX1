@@ -77,6 +77,38 @@ void list_print(node* headPtr){
 	}
 }
 
+void list_printn(node* headPtr, int n){
+
+        node* currNode;
+        node* prevNode;
+
+        currNode = headPtr->next;
+        prevNode = headPtr;
+        //this is real janky
+        int pos = 1;
+        //is this ok, to just handle 0 case???
+        if(n == 0){
+
+                printf("%s\n", headPtr->data);
+		return;
+        }
+        while(currNode->next != NULL){
+
+                if(pos == n){
+			printf("%s\n", currNode->data);
+			return;
+                }
+                currNode = currNode->next;
+                prevNode = prevNode->next;
+                pos++;
+        }
+
+
+        if(currNode->next == NULL){
+		printf("%s\n", currNode->data);
+		return;
+        }
+}
 
 
 node* list_remove(node* headPtr, char* dataToRm){
@@ -196,6 +228,9 @@ int main(void){
 	printf("\n\n%s\n\n",get);
 
 	list_print(list);
+
+	printf("\n\n\n");
+	list_printn(list, 1);
 
 	//list = list_remove(list, one);
 	//list = list_remove(list, four);
