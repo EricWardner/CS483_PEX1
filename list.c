@@ -5,7 +5,9 @@
 
 node* list_insert_head(node* headPtr, char* data){
 	node* newNode;
+	//allocate memory for new node
 	newNode = (node*)malloc(sizeof(node));
+	//link the nodes
 	newNode->data = data;
 	newNode->next = headPtr;
 
@@ -20,10 +22,12 @@ node* list_insert_tail(node* headPtr, char* data){
         newNode->data = data;
 	newNode->next = NULL;
 	//find end of list
+	//if empty, create head
 	if(headPtr == NULL){
 		return newNode;
 	}
 	else{
+		//traverse through list until tail is found
 		while(tempNode->next != NULL){
 			tempNode = tempNode->next;
 		}
@@ -93,31 +97,35 @@ node* list_remove(node* headPtr, char* dataToRm){
 	
 	currNode = headPtr->next;
 	prevNode = headPtr;
-	
+	//handle head node case
 	if((headPtr->data) == dataToRm){
-		
+		//just increment the head
 		currNode = headPtr->next;
 		free(headPtr);
 		return currNode;
 	}
+	//traverse through list
 	while(currNode != NULL){	
-		
+		//check for match in data
 		if((currNode->data) == dataToRm){
+			//link over and free node with match
 			prevNode->next = currNode->next;
 			free(currNode);
 			return headPtr;	
 		}
+		//increment nodes
 		currNode = currNode->next;
 		prevNode = prevNode->next;
 	}
 	
-	
-	if((currNode->data) == dataToRm){
-		free(currNode->next);		
-		free(currNode);
-		prevNode->next = NULL;
-		return headPtr;
-	}
+	//handle last case
+//	if((currNode->data) == dataToRm){
+//		free(currNode->next);		
+//		free(currNode);
+//		prevNode->next = NULL;
+//		return headPtr;
+//	}
+	//if no match
 	return headPtr;
 }
 
@@ -126,6 +134,7 @@ node* list_removen(node* headPtr, int n){
 	node* currNode = headPtr->next;
 	node* prevNode = headPtr;
 	int pos = 2;
+	//handle first case, just remove head node
 	if(n == 1){
 		free(headPtr);
 		return currNode;
@@ -143,16 +152,6 @@ node* list_removen(node* headPtr, int n){
 		prevNode = prevNode->next;
 		pos++;
 	}
-	
-	//handle last case
-//	if(currNode->next == NULL){
-//		//so many frees
-//		free(currNode->next);
-//		free(currNode);
-//		//previous node is now last node, link to null
-//		prevNode->next = NULL;
-//		return headPtr;
-//	}	
 	//if n is not in list, just return the list
 	return headPtr;
 }
