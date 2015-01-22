@@ -65,8 +65,7 @@ node* list_insertn(node* headPtr, char* data, int n){
 }
 
 void list_print(node* headPtr){
-	node* currNode;
-	currNode = headPtr;
+	node* currNode = headPtr;
 	while(currNode != NULL){
 		printf("%s\n",currNode->data);
 		currNode = currNode->next;
@@ -126,8 +125,12 @@ node* list_removen(node* headPtr, int n){
 	//need to keep track of previous node
 	node* currNode = headPtr->next;
 	node* prevNode = headPtr;
-	int pos = 1;
-	while(currNode->next != NULL){	
+	int pos = 2;
+	if(n == 1){
+		free(headPtr);
+		return currNode;
+	}
+	while(currNode != NULL){	
 		//go through all nodes untill last node		
 		if(pos == n){
 		//link over the current node
@@ -142,14 +145,14 @@ node* list_removen(node* headPtr, int n){
 	}
 	
 	//handle last case
-	if(currNode->next == NULL){
-		//so many frees
-		free(currNode->next);
-		free(currNode);
-		//previous node is now last node, link to null
-		prevNode->next = NULL;
-		return headPtr;
-	}	
+//	if(currNode->next == NULL){
+//		//so many frees
+//		free(currNode->next);
+//		free(currNode);
+//		//previous node is now last node, link to null
+//		prevNode->next = NULL;
+//		return headPtr;
+//	}	
 	//if n is not in list, just return the list
 	return headPtr;
 }
@@ -175,6 +178,10 @@ void list_destroy(node* headPtr){
 	//initialize the nodes
 	node* currNode = headPtr;
 	node* nextNode = headPtr->next;
+	if(nextNode == NULL){
+		free(currNode);
+		return;
+	}
 	//loop through the whole list
 	while(currNode != NULL){
 		nextNode = currNode->next;

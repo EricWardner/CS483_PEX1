@@ -100,6 +100,19 @@ int main(void) {
   one
   zero
   */
+  
+  printf("\nlist_removen test:\n");
+  list_print(list);
+  printf("2,1,3\n");
+  list = list_removen(list, 2);
+  list_print(list);
+  printf("\n");
+  list = list_removen(list,1);
+  list_print(list);
+  printf("\n");
+  list = list_removen(list,2);
+  list_print(list);  
+  printf("\n");
 
   list_destroy(list);
 }
