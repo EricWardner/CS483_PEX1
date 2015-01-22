@@ -75,23 +75,15 @@ void list_print(node* headPtr){
 
 void list_printn(node* headPtr, int n){
 
-        node* currNode = headPtr->next;
-        node* prevNode = headPtr;
-       
+        node* currNode = headPtr;
         int pos = 1;
-        while(currNode->next != NULL){
-
+        while(currNode != NULL){
                 if(pos == n){
 			printf("%s\n", currNode->data);
 			return;
                 }
                 currNode = currNode->next;
-                prevNode = prevNode->next;
                 pos++;
-        }
-        if(currNode->next == NULL){
-		printf("%s\n", currNode->data);
-		return;
         }
 	return;
 }
