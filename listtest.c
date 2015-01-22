@@ -95,10 +95,10 @@ int main(void) {
   list_printn(list, 2);
   list_printn(list, 1);
   /* expected output:
-  1: three
-  2: two
-  3: one
-  4: zero
+  three
+  two
+  one
+  zero
   */
 
   list_destroy(list);
