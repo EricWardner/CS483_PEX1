@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 node* list_insert_head(node* headPtr, char* data){
 	node* newNode;
 	newNode = (node*)malloc(sizeof(node));
@@ -11,7 +10,6 @@ node* list_insert_head(node* headPtr, char* data){
 	newNode->next = headPtr;
 
 	return newNode;
-	
 }
 
 node* list_insert_tail(node* headPtr, char* data){
@@ -34,10 +32,7 @@ node* list_insert_tail(node* headPtr, char* data){
 	}
 
 }
-
-
 // What if the user enters a negative number or very big?
-
 node* list_insertn(node* headPtr, char* data, int n){
 
 	node* currNode;
@@ -80,19 +75,10 @@ void list_print(node* headPtr){
 
 void list_printn(node* headPtr, int n){
 
-        node* currNode;
-        node* prevNode;
-
-        currNode = headPtr->next;
-        prevNode = headPtr;
-        //this is real janky
+        node* currNode = headPtr->next;
+        node* prevNode = headPtr;
+       
         int pos = 1;
-        //is this ok, to just handle 0 case???
-        if(n == 0){
-
-                printf("%s\n", headPtr->data);
-		return;
-        }
         while(currNode->next != NULL){
 
                 if(pos == n){
@@ -103,14 +89,12 @@ void list_printn(node* headPtr, int n){
                 prevNode = prevNode->next;
                 pos++;
         }
-
-
         if(currNode->next == NULL){
 		printf("%s\n", currNode->data);
 		return;
         }
+	return;
 }
-
 
 node* list_remove(node* headPtr, char* dataToRm){
 	node* currNode;
@@ -147,100 +131,64 @@ node* list_remove(node* headPtr, char* dataToRm){
 }
 
 node* list_removen(node* headPtr, int n){
-
-	node* currNode;
-	node* prevNode;
-	
-	currNode = headPtr->next;
-	prevNode = headPtr;
-	//this is real janky
+	//need to keep track of previous node
+	node* currNode = headPtr->next;
+	node* prevNode = headPtr;
 	int pos = 1;
-	//is this ok, to just handle 0 case???
-	if(n == 0){
-		
-		headPtr = headPtr->next;
-		return headPtr;
-	}
 	while(currNode->next != NULL){	
-		
+		//go through all nodes untill last node		
 		if(pos == n){
+		//link over the current node
 			prevNode->next = currNode->next;
 			free(currNode);
 			return headPtr;	
 		}
+		//increment nodes
 		currNode = currNode->next;
 		prevNode = prevNode->next;
 		pos++;
 	}
 	
-	
+	//handle last case
 	if(currNode->next == NULL){
+		//so many frees
 		free(currNode->next);
 		free(currNode);
+		//previous node is now last node, link to null
 		prevNode->next = NULL;
 		return headPtr;
 	}	
+	//if n is not in list, just return the list
+	return headPtr;
 }
 
 char* list_get(node* headPtr, int n){
 	int pos = 1;
 	node* currNode = headPtr;
+	//loop through all the nodes 
 	while(currNode != NULL){
 		if(pos == n){
+	//return the node's data, if right position
 			return currNode->data;
 		}
+	//increment position and node
 		pos++;
 		currNode = currNode->next;
 	}
+	//if given n is out of bounds, return null
 	return NULL; 
 }
 
 void list_destroy(node* headPtr){
+	//initialize the nodes
 	node* currNode = headPtr;
 	node* nextNode = headPtr->next;
-	
+	//loop through the whole list
 	while(currNode != NULL){
 		nextNode = currNode->next;
+	//free the memory of each node
 		free(currNode);
 		currNode = nextNode;
 	}
 	return;		
 }
-/**
-int main(void){
-	node* list;
-	list = NULL;
-	
-	char* one = "one";
-	char* two = "two";
-	char* three = "three";
-	char* four = "four";
-	char* five = "five";
-	
-
-	list = list_insert_tail(list, one);
-	list = list_insert_tail(list, two);
-	list = list_insert_tail(list, three);
-	list = list_insert_tail(list, four);
-	list = list_insert_tail(list, five);
-
-	
-		
-	list_print(list);
-
-	char* get = list_get(list, 2);
-	printf("\n\n%s\n\n",get);
-
-	list_print(list);
-
-	printf("\n\n\n");
-	list_printn(list, 1);
-
-	//list = list_remove(list, one);
-	//list = list_remove(list, four);
-	
-
-	//list_print(list);
-}
-**/
-
