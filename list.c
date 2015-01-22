@@ -8,7 +8,9 @@ node* list_insert_head(node* headPtr, char* data){
 	//allocate memory for new node
 	newNode = (node*)malloc(sizeof(node));
 	//link the nodes
-	newNode->data = data;
+	//newNode->data = data;
+	newNode->data = (char*)malloc(strlen(data)+1);
+	strcpy(newNode->data,data);
 	newNode->next = headPtr;
 
 	return newNode;
@@ -19,7 +21,9 @@ node* list_insert_tail(node* headPtr, char* data){
 	node* tempNode;
 	tempNode = headPtr;
         newNode = (node*)malloc(sizeof(node));
-        newNode->data = data;
+        //newNode->data = data;
+	newNode->data = (char*)malloc(strlen(data)+1);
+	strcpy(newNode->data,data);
 	newNode->next = NULL;
 	//find end of list
 	//if empty, create head
@@ -45,7 +49,9 @@ node* list_insertn(node* headPtr, char* data, int n){
 	currNode = headPtr;
 
 	newNode = (node*)malloc(sizeof(node));
-	newNode->data = data;
+	//newNode->data = data;
+	newNode->data = (char*)malloc(strlen(data)+1);
+	strcpy(newNode->data,data);
 
 	int pos = 1;
 	if (headPtr == NULL) {
@@ -98,18 +104,24 @@ node* list_remove(node* headPtr, char* dataToRm){
 	currNode = headPtr->next;
 	prevNode = headPtr;
 	//handle head node case
-	if((headPtr->data) == dataToRm){
+	//if((headPtr->data) == dataToRm){
+	if(strcmp(headPtr->data,dataToRm) == 0){
 		//just increment the head
 		currNode = headPtr->next;
+		//free(headPtr);
+		free(headPtr->data);
 		free(headPtr);
 		return currNode;
 	}
 	//traverse through list
 	while(currNode != NULL){	
 		//check for match in data
-		if((currNode->data) == dataToRm){
+		//if((currNode->data) == dataToRm){
+		if(strcmp(currNode->data,dataToRm) == 0){
 			//link over and free node with match
 			prevNode->next = currNode->next;
+			//free(currNode);
+			free(currNode->data);
 			free(currNode);
 			return headPtr;	
 		}
@@ -136,6 +148,8 @@ node* list_removen(node* headPtr, int n){
 	int pos = 2;
 	//handle first case, just remove head node
 	if(n == 1){
+		//free(headPtr);
+		free(headPtr->data);
 		free(headPtr);
 		return currNode;
 	}
@@ -144,6 +158,8 @@ node* list_removen(node* headPtr, int n){
 		if(pos == n){
 		//link over the current node
 			prevNode->next = currNode->next;
+			//free(currNode);
+			free(currNode->data);
 			free(currNode);
 			return headPtr;	
 		}
@@ -178,6 +194,8 @@ void list_destroy(node* headPtr){
 	node* currNode = headPtr;
 	node* nextNode = headPtr->next;
 	if(nextNode == NULL){
+		//free(currNode);
+		free(currNode->data);
 		free(currNode);
 		return;
 	}
@@ -185,6 +203,8 @@ void list_destroy(node* headPtr){
 	while(currNode != NULL){
 		nextNode = currNode->next;
 	//free the memory of each node
+		//free(currNode);
+		free(currNode->data);
 		free(currNode);
 		currNode = nextNode;
 	}
